@@ -45,10 +45,13 @@ class RootProduct extends Product {
 
     if (scope.hookName) {
       const buildinProduct = this.getProduct(BuildinProductName);
-      const hookApp = buildinProduct.getApp(HookAppName);
-      scope.product = buildinProduct;
-      scope.app = hookApp;
-      scope.page = hookApp.getPage(scope.hookName);
+      // we-app 延迟加载时，buildinProduct会不存在，导致报错
+      if (buildinProduct) {
+        const hookApp = buildinProduct.getApp(HookAppName);
+        scope.product = buildinProduct;
+        scope.app = hookApp;
+        scope.page = hookApp.getPage(scope.hookName);
+      }
     } else if (scope.pageName) {
       if (!scope.productName) {
         scope.product = this;

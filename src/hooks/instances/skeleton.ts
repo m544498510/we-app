@@ -20,7 +20,8 @@ const hookSkeletonDesc: HookDesc<HookSkeletonOpts> = {
       let { opts: { container } } = param;
       const { opts: { template, contentSelector } } = param;
 
-      if (!hookScope.getData('skeletonContainer')) {
+      // we-app 延迟加载时，container会不存在
+      if (!hookScope.getData('skeletonContainer') && container) {
         const div = document.createElement('div');
         div.innerHTML = template;
         const skeletonContainer = div.children[0];
