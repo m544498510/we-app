@@ -1,0 +1,37 @@
+import { HookScope, UsingHooksConfigs, UsingScope, TPageContainer, ResourceLoader, RouterType, Render, BaseInstance, BaseConfig, BaseType, BaseConstructor } from '@saasfe/we-app-types';
+export default class Base implements BaseInstance {
+    type: BaseType;
+    name: string;
+    parent: BaseInstance;
+    hookName: string;
+    private children;
+    private config;
+    private data;
+    private isStarted;
+    private initDeferred;
+    constructor(config?: BaseConfig);
+    start(): void;
+    compoundScope(base: BaseInstance, scope?: HookScope): HookScope;
+    getInited(): Promise<BaseInstance>;
+    requireChildrenInited(): Promise<any[]>;
+    getConfig(pathname?: string): any;
+    setConfig(config: BaseConfig | string, value?: any): void;
+    getData(pathname: string, traced?: boolean): any;
+    setData(pathname: string | symbol | object, data?: any): void;
+    usingHooks(params: UsingHooksConfigs, scopes?: HookScope[]): void;
+    configHooks(params: UsingHooksConfigs, scopes?: HookScope[]): void;
+    getResourceLoader(): ResourceLoader<any>;
+    setResourceLoader(resourceLoader: ResourceLoader<any>, scopes?: UsingScope[]): void;
+    getPageContainer(): TPageContainer;
+    setPageContainer(pageContainer: TPageContainer, scopes?: UsingScope[]): void;
+    getRender(): Render;
+    setRender(render: Render, scopes?: UsingScope[]): void;
+    setSandbox(sandbox: any, scopes?: UsingScope[]): void;
+    getSandbox(pageScope?: HookScope): any;
+    getRouterType(): RouterType.browser | RouterType;
+    protected registerChildren(cfgs: BaseConfig[], Child: BaseConstructor): Promise<BaseInstance[]>;
+    protected registerChild(config: BaseConfig, Child: BaseConstructor): Promise<BaseInstance>;
+    protected setInitDeferred(): void;
+    protected setInited(): void;
+    protected getChild(name: string): BaseInstance;
+}
